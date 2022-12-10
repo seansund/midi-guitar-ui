@@ -13,7 +13,7 @@ export const FretBoardView = (props: FretBoardViewProps) => {
   const [direction] = useAtom(directionAtom)
 
   const columns = direction === 'vertical' ? 13 : 18
-  const width = direction === 'vertical' ? '200px' : '100%'
+  const width = direction === 'vertical' ? '250px' : '100%'
 
   const frets = () => {
     if (direction === 'vertical') {
@@ -25,7 +25,7 @@ export const FretBoardView = (props: FretBoardViewProps) => {
 
   return (
     <div style={{width}}>
-      <Grid container columns={{ xs: columns }}>
+      <Grid container columns={{ xs: columns }} alignItems="center">
         {frets()}
       </Grid>
     </div>

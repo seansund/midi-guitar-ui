@@ -30,7 +30,16 @@ const defaultFretLabels = (): FretBoardLabels => {
 
 const fretLabels = (fretIndex: number): FretBoardLabel[] => {
   const labels = Array.from(Array(6).keys())
-    .map(stringIndex => ({fretIndex, stringIndex, label: '' + fretIndex}))
+    .map(stringIndex => ({fretIndex, stringIndex, label: notes[stringIndex][fretIndex % 12]}))
 
   return labels
 }
+
+const notes = [
+  ['E', 'F', 'F#', 'G', 'G#', 'A', 'A#', 'B', 'C', 'C#', 'D', 'D#'],
+  ['B', 'C', 'C#', 'D', 'D#', 'E', 'F', 'F#', 'G', 'G#', 'A', 'A#'],
+  ['G', 'G#', 'A', 'A#', 'B', 'C', 'C#', 'D', 'D#', 'E', 'F', 'F#'],
+  ['D', 'D#', 'E', 'F', 'F#', 'G', 'G#', 'A', 'A#', 'B', 'C', 'C#'],
+  ['A', 'A#', 'B', 'C', 'C#', 'D', 'D#', 'E', 'F', 'F#', 'G', 'G#'],
+  ['E', 'F', 'F#', 'G', 'G#', 'A', 'A#', 'B', 'C', 'C#', 'D', 'D#']
+]

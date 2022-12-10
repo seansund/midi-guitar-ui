@@ -3,7 +3,7 @@ import {useAtom} from 'jotai';
 
 import {fretActionsAtom} from '../atoms/fret-actions.atom';
 import {FretBoardAction, FretBoardActions} from '../models';
-import {FretActionApi, getFretActionApi} from '../services/fret-action';
+import {FretActionApi, getFretActionApi} from '../services';
 
 const service: FretActionApi = getFretActionApi();
 
