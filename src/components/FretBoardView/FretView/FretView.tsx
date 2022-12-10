@@ -1,45 +1,50 @@
-import {Component} from 'react';
 import Grid from '@mui/material/Grid';
 
-import './Fret.css';
-import {FretBoardState} from '../../../state';
+import {FretBoardAction, FretBoardLabel} from '../../../models';
+import {useFretLabels} from '../../../hooks/fret-labels.hook';
+import {useFretActions} from '../../../hooks/fret-actions.hook';
 
-export interface FretProps {
+export interface FretViewProps {
   number: number;
   key: string;
 }
 
-export class FretView extends Component<FretProps, FretBoardState> {
+export const FretView = (props: FretViewProps) => {
+  const fretIndex = props.number
+  const fretLabels: FretBoardLabel[] = useFretLabels();
+  const fretActions: FretBoardAction[] = useFretActions();
 
-  props: FretProps;
+  const fretLabel = fretLabelBuilder(fretLabels)
+  const fretClassNames = fretClassNamesBuilder(fretActions, fretIndex)
 
-  constructor(props: FretProps) {
-    super(props);
-
-    this.props = props;
-  }
-
-  render() {
-    return (
-      <>
-        <Grid item xs={1}>{ fretMarker(this.props.number) }</Grid>
-        <Grid className={fretClassNames(this.props.number)} item xs={2}>{this.props.number}</Grid>
-        <Grid className={fretClassNames(this.props.number)} item xs={2}>{this.props.number}</Grid>
-        <Grid className={fretClassNames(this.props.number)} item xs={2}>{this.props.number}</Grid>
-        <Grid className={fretClassNames(this.props.number)} item xs={2}>{this.props.number}</Grid>
-        <Grid className={fretClassNames(this.props.number)} item xs={2}>{this.props.number}</Grid>
-        <Grid className={fretClassNames(this.props.number)} item xs={2}>{this.props.number}</Grid>
-      </>
-    )
-  }
+  return (
+    <>
+      <Grid item xs={1}>{ fretMarker(fretIndex) }</Grid>
+      <Grid className={fretClassNames(5)} item xs={2}>{fretLabel(fretIndex, 5)}</Grid>
+      <Grid className={fretClassNames(4)} item xs={2}>{fretLabel(fretIndex, 4)}</Grid>
+      <Grid className={fretClassNames(3)} item xs={2}>{fretLabel(fretIndex, 3)}</Grid>
+      <Grid className={fretClassNames(2)} item xs={2}>{fretLabel(fretIndex, 2)}</Grid>
+      <Grid className={fretClassNames(1)} item xs={2}>{fretLabel(fretIndex, 1)}</Grid>
+      <Grid className={fretClassNames(0)} item xs={2}>{fretLabel(fretIndex, 0)}</Grid>
+    </>
+  )
 }
 
-export const fretClassNames = (index: number): string => {
-  if (index === 0) {
-    return 'fret-vertical fret-vertical-open'
-  }
+const fretClassNamesBuilder = (actions: FretBoardAction[], fretIndex: number) => {
+  return (stringIndex: number): string => {
+    const classNames: string[] = ['fret-vertical']
 
-  return 'fret-vertical'
+    if (fretIndex === 0) {
+      classNames.push('fret-vertical-open')
+    }
+
+    const match = actions.filter(action => action.fretIndex === fretIndex && action.stringIndex === stringIndex)
+    if (match.length > 0) {
+      classNames.push('fret-active')
+    }
+
+    return classNames.join(' ')
+  }
 }
 
 export const fretMarker = (fret: number): string => {
@@ -52,5 +57,13 @@ export const fretMarker = (fret: number): string => {
       return "**"
     default:
       return ""
+  }
+}
+
+export const fretLabelBuilder = (fretLabels: FretBoardLabel[] = []) => {
+  return (fretIndex: number, stringIndex: number): string => {
+    const matches = fretLabels.filter(label => label.fretIndex === fretIndex && label.stringIndex === stringIndex)
+
+    return matches.length > 0 ? matches[0].label : '';
   }
 }

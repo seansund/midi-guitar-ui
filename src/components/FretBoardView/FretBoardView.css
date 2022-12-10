@@ -1,0 +1,31 @@
+
+.fret-horizontal, .fret-horizontal-open {
+    border-right-color: black;
+    border-right-width: 1px;
+    border-right-style: solid;
+}
+
+.fret-horizontal-open {
+    border-left-color: black;
+    border-left-width: 1px;
+    border-left-style: solid;
+    border-right-width: 5px;
+}
+
+.fret-vertical, .fret-vertical-open {
+    border-bottom-color: black;
+    border-bottom-width: 1px;
+    border-bottom-style: solid;
+}
+
+.fret-vertical-open {
+    border-top-color: black;
+    border-top-width: 1px;
+    border-top-style: solid;
+    border-bottom-width: 5px;
+}
+
+.fret-active {
+    background-color: darkolivegreen;
+    color: white;
+}

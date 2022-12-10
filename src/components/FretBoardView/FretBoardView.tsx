@@ -1,43 +1,33 @@
-import {Component} from 'react';
 import Grid from '@mui/material/Grid'
+import {useAtom} from 'jotai';
 
-import { FretView } from './FretView';
-import { StringView } from './StringView';
-import {FretBoardState} from '../../state';
+import './FretBoardView.css';
+import {FretView} from './FretView';
+import {StringView} from './StringView';
+import {directionAtom} from '../../atoms/direction.atom';
 
-export interface FretBoardProps {
-  direction?: 'vertical' | 'horizontal';
+export interface FretBoardViewProps {
 }
 
-export class FretBoardView extends Component<FretBoardProps, FretBoardState> {
+export const FretBoardView = (props: FretBoardViewProps) => {
+  const [direction] = useAtom(directionAtom)
 
-  props: FretBoardProps;
+  const columns = direction === 'vertical' ? 13 : 18
+  const width = direction === 'vertical' ? '200px' : '100%'
 
-  constructor(props: FretBoardProps) {
-    super(props);
-
-    this.props = props;
-  }
-
-  render() {
-    const direction = this.props.direction || 'vertical'
-    const columns = direction === 'vertical' ? 13 : 18
-    const width = direction === 'vertical' ? '200px' : '100%'
-
-    return (
-      <div style={{width}}>
-        <Grid container columns={{ xs: columns }}>
-          {this.frets()}
-        </Grid>
-      </div>
-    );
-  }
-
-  frets() {
-    if (this.props.direction === 'vertical') {
+  const frets = () => {
+    if (direction === 'vertical') {
       return Array.from(Array(18).keys()).map((fret: number) => <FretView key={'' + fret} number={fret}></FretView>)
     } else {
       return Array.from(Array(7).keys()).map((index: number) => <StringView key={'' + index} index={index}></StringView>)
     }
   }
+
+  return (
+    <div style={{width}}>
+      <Grid container columns={{ xs: columns }}>
+        {frets()}
+      </Grid>
+    </div>
+  );
 }

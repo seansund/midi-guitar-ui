@@ -1,46 +1,54 @@
-import {Component} from 'react';
 import Grid from '@mui/material/Grid';
 
-import './String.css'
-import {fretMarker} from '../FretView';
-import {FretBoardState} from '../../../state';
+import {fretLabelBuilder, fretMarker} from '../FretView';
+import {FretBoardAction, FretBoardLabel} from '../../../models';
+import {useFretLabels} from '../../../hooks/fret-labels.hook';
+import {useFretActions} from '../../../hooks/fret-actions.hook';
 
-export interface StringProps {
+export interface StringViewProps {
   index: number;
   key: string;
 }
 
-export class StringView extends Component<StringProps, FretBoardState> {
+export const StringView = (props: StringViewProps) => {
+  const stringIndex = props.index;
 
-  props: StringProps;
+  const fretLabels: FretBoardLabel[] = useFretLabels();
+  const fretActions: FretBoardAction[] = useFretActions();
 
-  constructor(props: StringProps) {
-    super(props);
+  const fretLabel = fretLabelBuilder(fretLabels)
+  const fretClassNames = fretClassNamesBuilder(fretActions, stringIndex)
 
-    this.props = props;
-  }
-
-  render() {
-    return (
-      <>
-        {this.strings()}
-      </>
-    )
-  }
-
-  strings() {
-    if (this.props.index === 6) {
-      return Array.from(Array(18).keys()).map((index: number) => <Grid item xs={1}>{fretMarker(index)}</Grid>)
+  const strings = () => {
+    if (stringIndex === 6) {
+      return Array.from(Array(18).keys())
+        .map((fretIndex: number) => <Grid item xs={1}>{fretMarker(fretIndex)}</Grid>)
     } else {
-      return Array.from(Array(18).keys()).map((index: number) => <Grid className={fretClassNames(index)} item xs={1}>{index}</Grid>)
+      return Array.from(Array(18).keys())
+        .map((fretIndex: number) => <Grid className={fretClassNames(fretIndex)} item xs={1}>{fretLabel(fretIndex, stringIndex)}</Grid>)
     }
   }
+
+  return (
+    <>
+      {strings()}
+    </>
+  )
 }
 
-const fretClassNames = (index: number): string => {
-  if (index === 0) {
-    return 'fret-horizontal fret-horizontal-open'
-  }
+const fretClassNamesBuilder = (fretActions: FretBoardAction[], stringIndex: number) => {
+  return (fretIndex: number): string => {
+    const classNames: string[] = ['fret-horizontal']
 
-  return 'fret-horizontal'
+    if (fretIndex === 0) {
+      classNames.push('fret-horizontal-open')
+    }
+
+    const match = fretActions.filter(action => action.fretIndex === fretIndex && action.stringIndex === stringIndex)
+    if (match.length > 0) {
+      classNames.push('fret-active')
+    }
+
+    return classNames.join(' ')
+  }
 }
