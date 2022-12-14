@@ -1,4 +1,4 @@
 import {atom} from 'jotai';
-import {Chord} from '../models';
+import {ChordModel} from '../models';
 
-export const chordsAtom = atom<Chord[]>([])
+export const chordsAtom = atom<ChordModel[]>([])

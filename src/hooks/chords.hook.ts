@@ -1,16 +1,17 @@
 import {useEffect} from 'react';
 import {useAtom} from 'jotai';
-import {Chord, Chords} from '../models';
-import {ChordApi, getChordApi} from '../services';
-import {chordsAtom} from '../atoms/chords.atom';
 
-const service: ChordApi = getChordApi();
+import {chordsAtom} from '../atoms';
+import {ChordModel, ChordsModel} from '../models';
+import {getGuitarEventsApi, GuitarEventsApi} from "../services";
 
-export const useChords = (): Chord[] => {
+const service: GuitarEventsApi = getGuitarEventsApi();
+
+export const useChords = (): ChordModel[] => {
   const [chords, setChords] = useAtom(chordsAtom);
 
   useEffect(() => {
-    const subscription = service.chord().subscribe((actions: Chords) => {
+    const subscription = service.chord().subscribe((actions: ChordsModel) => {
       setChords(actions.chords)
     });
 

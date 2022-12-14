@@ -1,12 +1,12 @@
 import './ChordView.css';
-import {Chord} from '../../models';
+import {ChordModel} from '../../models';
 import {useChords} from '../../hooks/chords.hook';
 
 export interface ChordViewProps {
 }
 
 export const ChordView = (props: ChordViewProps) => {
-  const chords: Chord[] = useChords()
+  const chords: ChordModel[] = useChords()
 
   const chord = chords.map(c => c.label).join(', ')
 

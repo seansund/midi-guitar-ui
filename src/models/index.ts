@@ -1,4 +1,4 @@
 
-export * from './Chords';
-export * from './FretBoardLabels';
-export * from './FretBoardActions';
+export * from './chords.model';
+export * from './fret-board-labels.model';
+export * from './guitar-positions.model';

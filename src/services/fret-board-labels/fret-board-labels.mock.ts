@@ -1,26 +1,26 @@
 import {BehaviorSubject, Observable} from 'rxjs';
 
-import {FretLabelsApi} from './fret-labels.api';
-import {FretBoardLabel, FretBoardLabels} from '../../models';
+import {FretBoardLabelsApi} from './fret-board-labels.api';
+import {FretBoardLabelModel, FretBoardLabelsModel} from '../../models';
 
-export class FretLabelsMock implements FretLabelsApi {
+export class FretBoardLabelsMock implements FretBoardLabelsApi {
 
-  subject: BehaviorSubject<FretBoardLabels>;
+  subject: BehaviorSubject<FretBoardLabelsModel>;
 
   constructor() {
     this.subject = new BehaviorSubject(defaultFretLabels())
   }
 
-  fretLabels(): Observable<FretBoardLabels> {
+  fretBoardLabels(): Observable<FretBoardLabelsModel> {
     return this.subject;
   }
 }
 
-const defaultFretLabels = (): FretBoardLabels => {
+const defaultFretLabels = (): FretBoardLabelsModel => {
   return {
     labels: Array.from(Array(18).keys())
       .map(fretLabels)
-      .reduce((result: FretBoardLabel[], current: FretBoardLabel[]) => {
+      .reduce((result: FretBoardLabelModel[], current: FretBoardLabelModel[]) => {
         result.push(...current)
 
         return result
@@ -28,7 +28,7 @@ const defaultFretLabels = (): FretBoardLabels => {
   }
 }
 
-const fretLabels = (fretIndex: number): FretBoardLabel[] => {
+const fretLabels = (fretIndex: number): FretBoardLabelModel[] => {
   const labels = Array.from(Array(6).keys())
     .map(stringIndex => ({fretIndex, stringIndex, label: notes[stringIndex][fretIndex % 12]}))
 

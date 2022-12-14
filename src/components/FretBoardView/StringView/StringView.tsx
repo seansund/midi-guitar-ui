@@ -1,9 +1,9 @@
 import Grid from '@mui/material/Grid';
 
 import {fretLabelBuilder, fretMarker} from '../FretView';
-import {FretBoardAction, FretBoardLabel} from '../../../models';
-import {useFretLabels} from '../../../hooks/fret-labels.hook';
-import {useFretActions} from '../../../hooks/fret-actions.hook';
+import {GuitarPositionModel, FretBoardLabelModel} from '../../../models';
+import {useFretBoardLabels} from '../../../hooks/fret-board-labels.hook';
+import {useGuitarPositions} from '../../../hooks/guitar-positions.hook';
 
 export interface StringViewProps {
   index: number;
@@ -13,8 +13,8 @@ export interface StringViewProps {
 export const StringView = (props: StringViewProps) => {
   const stringIndex = props.index;
 
-  const fretLabels: FretBoardLabel[] = useFretLabels();
-  const fretActions: FretBoardAction[] = useFretActions();
+  const fretLabels: FretBoardLabelModel[] = useFretBoardLabels();
+  const fretActions: GuitarPositionModel[] = useGuitarPositions();
 
   const fretLabel = fretLabelBuilder(fretLabels)
   const fretClassNames = fretClassNamesBuilder(fretActions, stringIndex)
@@ -36,7 +36,7 @@ export const StringView = (props: StringViewProps) => {
   )
 }
 
-const fretClassNamesBuilder = (fretActions: FretBoardAction[], stringIndex: number) => {
+const fretClassNamesBuilder = (fretActions: GuitarPositionModel[], stringIndex: number) => {
   return (fretIndex: number): string => {
     const classNames: string[] = ['fret-horizontal']
 
