@@ -11,6 +11,6 @@ export const ChordView = (props: ChordViewProps) => {
   const chord = chords.map(c => c.label).join(', ')
 
   return (
-    <div className={"chord"}>{chord}</div>
+    <div className={"chord"}>&nbsp;{chord}&nbsp;</div>
   )
 }

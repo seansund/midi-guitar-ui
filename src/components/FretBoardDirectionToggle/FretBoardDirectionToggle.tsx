@@ -10,8 +10,6 @@ export const FretBoardDirectionToggle = (props: FretBoardDirectionToggleProps) =
   const [direction, setDirection] = useAtom(directionAtom)
 
   const handleChange = (e: any) => {
-    console.log('Changing direction: ' + e.value, e)
-
     setDirection(e.target.value)
   }
 

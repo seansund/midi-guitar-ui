@@ -28,8 +28,10 @@ const splitLink = split(
   httpLink,
 );
 
-export const client = new ApolloClient({
-  link: splitLink,
-  cache: new InMemoryCache()
-});
-
+let _client: ApolloClient<any>
+export const getApolloClient = () => _client
+    ? _client
+    : _client = new ApolloClient({
+      link: splitLink,
+      cache: new InMemoryCache()
+    });

@@ -4,7 +4,9 @@ import {useAtom} from 'jotai';
 import './FretBoardView.css';
 import {FretView} from './FretView';
 import {StringView} from './StringView';
-import {directionAtom} from '../../atoms/direction.atom';
+import {directionAtom} from '../../atoms';
+import {FretBoardLabelModel, GuitarPositionModel} from "../../models";
+import {useFretBoardLabels, useGuitarPositions} from "../../hooks";
 
 export interface FretBoardViewProps {
 }
@@ -15,11 +17,16 @@ export const FretBoardView = (props: FretBoardViewProps) => {
   const columns = direction === 'vertical' ? 13 : 18
   const width = direction === 'vertical' ? '250px' : '100%'
 
+  const fretLabels: FretBoardLabelModel[] = useFretBoardLabels()
+  const fretActions: GuitarPositionModel[] = useGuitarPositions()
+
+  const fretLabel = fretLabelBuilder(fretLabels)
+
   const frets = () => {
     if (direction === 'vertical') {
-      return Array.from(Array(18).keys()).map((fret: number) => <FretView key={'' + fret} number={fret}></FretView>)
+      return Array.from(Array(18).keys()).map((fret: number) => <FretView key={'' + fret} number={fret} fretLabels={fretLabel} fretActions={fretActions}></FretView>)
     } else {
-      return Array.from(Array(7).keys()).map((index: number) => <StringView key={'' + index} index={index}></StringView>)
+      return Array.from(Array(7).keys()).map((index: number) => <StringView key={'' + index} index={index} fretLabels={fretLabel} fretActions={fretActions}></StringView>)
     }
   }
 
@@ -31,3 +38,13 @@ export const FretBoardView = (props: FretBoardViewProps) => {
     </div>
   );
 }
+
+export const fretLabelBuilder = (fretLabels: FretBoardLabelModel[] = []) => {
+  return (fretIndex: number, stringIndex: number) => {
+    const matches = fretLabels.filter(label => label.fretIndex === fretIndex && label.stringIndex === stringIndex)
+
+    return matches.length > 0 ? matches[0].label || NBSP : NBSP;
+  }
+}
+
+const NBSP = (<>&nbsp;</>)
