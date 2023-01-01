@@ -1,6 +1,5 @@
-import {atom} from 'jotai';
+import {atom} from "jotai";
 
-import {FretBoardModeModel} from '../models';
-import {defaultFretBoardMode} from "../services";
+import {fretBoardConfigAtom} from "./fret-board-config.atom";
 
-export const fretBoardModeAtom = atom<FretBoardModeModel>(defaultFretBoardMode)
+export const fretBoardModeAtom = atom<string>(get => get(fretBoardConfigAtom).mode)

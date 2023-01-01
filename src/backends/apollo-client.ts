@@ -1,14 +1,14 @@
-import {split, HttpLink, ApolloClient, InMemoryCache} from '@apollo/client';
-import { getMainDefinition } from '@apollo/client/utilities';
-import { GraphQLWsLink } from '@apollo/client/link/subscriptions';
-import { createClient } from 'graphql-ws';
+import {ApolloClient, HttpLink, InMemoryCache, split} from '@apollo/client';
+import {getMainDefinition} from '@apollo/client/utilities';
+import {GraphQLWsLink} from '@apollo/client/link/subscriptions';
+import {createClient} from 'graphql-ws';
 
 const httpLink = new HttpLink({
-  uri: 'http://localhost:4000/graphql'
+  uri: 'http://localhost:3000/graphql'
 });
 
 const wsLink = new GraphQLWsLink(createClient({
-  url: 'ws://localhost:4000/subscriptions',
+  url: 'ws://localhost:3000/subscription',
 }));
 
 // The split function takes three parameters:
@@ -33,5 +33,5 @@ export const getApolloClient = () => _client
     ? _client
     : _client = new ApolloClient({
       link: splitLink,
-      cache: new InMemoryCache()
+      cache: new InMemoryCache(),
     });

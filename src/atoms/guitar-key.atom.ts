@@ -1,6 +1,5 @@
 import {atom} from 'jotai';
 
-import {KeyModel} from '../models';
-import {defaultKey} from "../services";
+import {fretBoardConfigAtom} from "./fret-board-config.atom";
 
-export const guitarKeyAtom = atom<KeyModel>(defaultKey)
+export const guitarKeyAtom = atom<string>(get => get(fretBoardConfigAtom).key)

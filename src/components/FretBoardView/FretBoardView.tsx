@@ -4,9 +4,8 @@ import {useAtom} from 'jotai';
 import './FretBoardView.css';
 import {FretView} from './FretView';
 import {StringView} from './StringView';
-import {directionAtom} from '../../atoms';
-import {FretBoardLabelModel, GuitarPositionModel} from "../../models";
-import {useFretBoardLabels, useGuitarPositions} from "../../hooks";
+import {directionAtom, fretBoardLabelsAtom, guitarPositionsAtom} from '../../atoms';
+import {FretBoardLabelModel} from "../../models";
 
 export interface FretBoardViewProps {
 }
@@ -17,8 +16,11 @@ export const FretBoardView = (props: FretBoardViewProps) => {
   const columns = direction === 'vertical' ? 13 : 18
   const width = direction === 'vertical' ? '250px' : '100%'
 
-  const fretLabels: FretBoardLabelModel[] = useFretBoardLabels()
-  const fretActions: GuitarPositionModel[] = useGuitarPositions()
+  const [fretBoardLabels] = useAtom(fretBoardLabelsAtom)
+  const fretLabels = fretBoardLabels.labels
+
+  const [guitarPositions] = useAtom(guitarPositionsAtom)
+  const fretActions = guitarPositions.positions;
 
   const fretLabel = fretLabelBuilder(fretLabels)
 

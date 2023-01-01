@@ -4,19 +4,22 @@ import {FretBoardModeModel} from "../../models";
 import {FretBoardConfigApi, getFretBoardConfigApi} from "../../services";
 
 export interface ModeControlProps {
-    mode: FretBoardModeModel
+    mode: string
     modes: FretBoardModeModel[]
 }
 
 export const ModeControl = (props: ModeControlProps) => {
     const service: FretBoardConfigApi = getFretBoardConfigApi();
 
+    const modes = props.modes || [];
+
     const setModeFromValue = (e: any) => {
         const value = e.target.value
 
-        const newMode = getMode(props.modes, value)
-
-        service.setMode(newMode)
+        service.setMode(value).subscribe({
+            next: () => {},
+            error: () => {}
+        })
     }
 
     return (
@@ -25,11 +28,11 @@ export const ModeControl = (props: ModeControlProps) => {
             <Select
                 labelId="fret-board-mode-label"
                 id="fret-board-mode"
-                value={props.mode.mode}
+                value={props.mode}
                 label="Mode"
                 onChange={setModeFromValue}
             >
-                {props.modes.map(mode => <MenuItem key={mode.mode} value={mode.mode}>{mode.label}</MenuItem>)}
+                {modes.map(mode => <MenuItem key={mode.mode} value={mode.mode}>{mode.label}</MenuItem>)}
             </Select>
         </FormControl>
     )

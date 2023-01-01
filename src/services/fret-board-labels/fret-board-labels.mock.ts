@@ -2,13 +2,7 @@ import {BehaviorSubject, Observable} from 'rxjs';
 
 import {FretBoardLabelsApi} from './fret-board-labels.api';
 import {defaultFretBoardMode, defaultKey, FretBoardConfigApi, getFretBoardConfigApi} from "../fret-board-config";
-import {
-    FretBoardConfigModel,
-    FretBoardLabelModel,
-    FretBoardLabelsModel,
-    FretBoardModeModel,
-    KeyModel
-} from '../../models';
+import {FretBoardConfigModel, FretBoardLabelModel, FretBoardLabelsModel} from '../../models';
 
 export class FretBoardLabelsMock implements FretBoardLabelsApi {
 
@@ -17,9 +11,9 @@ export class FretBoardLabelsMock implements FretBoardLabelsApi {
   constructor() {
       const fretConfigService: FretBoardConfigApi = getFretBoardConfigApi()
 
-      this.subject = new BehaviorSubject(buildFretLabels({mode: defaultFretBoardMode, key: defaultKey}))
+      this.subject = new BehaviorSubject(buildFretLabels({mode: defaultFretBoardMode.mode, key: defaultKey.key}))
 
-      fretConfigService.config().subscribe(config => this.subject.next(buildFretLabels(config)))
+      fretConfigService.config(true).subscribe(config => this.subject.next(buildFretLabels(config)))
   }
 
   fretBoardLabels(): Observable<FretBoardLabelsModel> {
@@ -41,7 +35,7 @@ const buildFretLabels = (fretBoardConfig: FretBoardConfigModel): FretBoardLabels
 
 const fretLabels = (fretBoardConfig: FretBoardConfigModel) => {
     const template = getFretBoardTemplate(fretBoardConfig.mode)
-    const offset = fretBoardConfig.mode.mode !== 'notes' ? determineOffset(fretBoardConfig.key) : 0
+    const offset = fretBoardConfig.mode !== 'notes' ? determineOffset(fretBoardConfig.key) : 0
 
     return (fretIndex: number): FretBoardLabelModel[] => {
         return Array
@@ -54,8 +48,8 @@ const fretLabels = (fretBoardConfig: FretBoardConfigModel) => {
     }
 }
 
-const getFretBoardTemplate = (mode: FretBoardModeModel): string[][] => {
-    switch (mode.mode) {
+const getFretBoardTemplate = (mode: string): string[][] => {
+    switch (mode) {
         case 'keyboard-major':
             return majorScale
         case 'keyboard-pentatonic':
@@ -68,8 +62,8 @@ const getFretBoardTemplate = (mode: FretBoardModeModel): string[][] => {
     }
 }
 
-const determineOffset = (key: KeyModel): number => {
-    return baseNotes.indexOf(key.key)
+const determineOffset = (key: string): number => {
+    return baseNotes.indexOf(key)
 }
 
 const shiftNotesUp = (notes: string[], shift: number): string[] => {

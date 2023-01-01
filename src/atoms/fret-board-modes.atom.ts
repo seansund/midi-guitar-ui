@@ -1,6 +1,15 @@
-import {atom} from 'jotai';
+import {atomWithObservable} from "jotai/utils";
 
 import {FretBoardModeModel} from '../models';
-import {defaultFretBoardMode} from "../services";
+import {defaultFretBoardMode, FretBoardConfigApi, getFretBoardConfigApi} from "../services";
 
-export const fretBoardModesAtom = atom<FretBoardModeModel[]>([defaultFretBoardMode])
+export const fretBoardModesAtom = atomWithObservable<FretBoardModeModel[]>(
+    () => {
+        const service: FretBoardConfigApi = getFretBoardConfigApi();
+
+        return service.getAvailableModes();
+    },
+    {
+        initialValue: [defaultFretBoardMode]
+    }
+)

@@ -8,7 +8,7 @@ export const defaultKey: KeyModel = {key: 'G', label: 'G / e'}
 export abstract class FretBoardConfigApi {
     abstract getAvailableModes(): Observable<FretBoardModeModel[]>;
     abstract getAvailableKeys(): Observable<KeyModel[]>;
-    abstract setMode(mode: FretBoardModeModel): Observable<FretBoardConfigModel>;
-    abstract setKey(key: KeyModel): Observable<FretBoardConfigModel>;
-    abstract config(): Observable<FretBoardConfigModel>;
+    abstract setMode(mode: string): Observable<FretBoardConfigModel>;
+    abstract setKey(key: string): Observable<FretBoardConfigModel>;
+    abstract config(skipQuery?: boolean): Observable<FretBoardConfigModel>;
 }

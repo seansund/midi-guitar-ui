@@ -31,8 +31,8 @@ export class FretBoardConfigMock implements FretBoardConfigApi {
 
     constructor() {
         this.subject = new BehaviorSubject<FretBoardConfigModel>({
-            mode: defaultFretBoardMode,
-            key: defaultKey,
+            mode: defaultFretBoardMode.mode,
+            key: defaultKey.key,
         })
     }
 
@@ -48,10 +48,10 @@ export class FretBoardConfigMock implements FretBoardConfigApi {
         return this.subject;
     }
 
-    setKey(key: KeyModel): Observable<FretBoardConfigModel> {
+    setKey(key: string): Observable<FretBoardConfigModel> {
         const current: FretBoardConfigModel = this.subject.value;
 
-        if (current.key.key === key.key) {
+        if (current.key === key) {
             return from([current]);
         }
 
@@ -62,10 +62,10 @@ export class FretBoardConfigMock implements FretBoardConfigApi {
         return from([next]);
     }
 
-    setMode(mode: FretBoardModeModel): Observable<FretBoardConfigModel> {
+    setMode(mode: string): Observable<FretBoardConfigModel> {
         const current: FretBoardConfigModel = this.subject.value;
 
-        if (current.mode.mode === mode.mode) {
+        if (current.mode === mode) {
             return from([current]);
         }
 

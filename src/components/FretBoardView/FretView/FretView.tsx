@@ -1,7 +1,6 @@
 import Grid from '@mui/material/Grid';
 
-import {GuitarPositionModel, FretBoardLabelModel} from '../../../models';
-import {useFretBoardLabels, useGuitarPositions} from '../../../hooks';
+import {GuitarPositionModel} from '../../../models';
 
 export interface FretViewProps {
   number: number;

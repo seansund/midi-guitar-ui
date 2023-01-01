@@ -1,7 +1,7 @@
 
 export interface FretBoardConfigModel {
-    mode: FretBoardModeModel;
-    key: KeyModel;
+    mode: string;
+    key: string;
 }
 
 export interface FretBoardModeModel {

@@ -4,7 +4,7 @@ import {KeyModel} from "../../models";
 import {FretBoardConfigApi, getFretBoardConfigApi} from "../../services";
 
 export interface GuitarKeyControlProps {
-    guitarKey: KeyModel
+    guitarKey: string
     guitarKeys: KeyModel[]
     disabled?: boolean
 }
@@ -12,12 +12,17 @@ export interface GuitarKeyControlProps {
 export const GuitarKeyControl = (props: GuitarKeyControlProps) => {
     const service: FretBoardConfigApi = getFretBoardConfigApi()
 
+    const keys = props.guitarKeys || []
+
     const setKeyFromValue = (e: any) => {
-        const value = e.target.value
+        const value: string = e.target.value
 
-        const newKey = getKey(props.guitarKeys, value)
+        console.log('Guitar key change: ' + value)
 
-        service.setKey(newKey)
+        service.setKey(value).subscribe({
+            next: val => console.log('Guitar key result: ', val),
+            error: err => console.log('Error setting guitar key: ', err)
+        })
     }
 
     return (
@@ -26,12 +31,12 @@ export const GuitarKeyControl = (props: GuitarKeyControlProps) => {
             <Select
                 labelId="guitar-key-label"
                 id="guitar-key"
-                value={props.guitarKey.key}
+                value={props.guitarKey}
                 label="Key"
                 disabled={props.disabled}
                 onChange={setKeyFromValue}
             >
-                {props.guitarKeys.map(key => <MenuItem key={key.key} value={key.key}>{key.label}</MenuItem>)}
+                {keys.map(key => <MenuItem key={key.key} value={key.key}>{key.label}</MenuItem>)}
             </Select>
         </FormControl>
     )
