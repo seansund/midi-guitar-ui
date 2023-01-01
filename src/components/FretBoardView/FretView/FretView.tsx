@@ -36,7 +36,9 @@ const fretClassNamesBuilder = (actions: GuitarPositionModel[], fretIndex: number
       classNames.push('fret-vertical-open')
     }
 
-    const match = actions.filter(action => action.fretIndex === fretIndex && action.stringIndex === stringIndex)
+    const match = actions
+        .filter(action => !!action)
+        .filter(action => action.fretIndex === fretIndex && action.stringIndex === stringIndex)
     if (match.length > 0) {
       classNames.push('fret-active')
     }

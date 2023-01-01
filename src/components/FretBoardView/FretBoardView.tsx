@@ -5,7 +5,7 @@ import './FretBoardView.css';
 import {FretView} from './FretView';
 import {StringView} from './StringView';
 import {directionAtom, fretBoardLabelsAtom, guitarPositionsAtom} from '../../atoms';
-import {FretBoardLabelModel} from "../../models";
+import {FretBoardLabelModel, GuitarPositionModel} from "../../models";
 
 export interface FretBoardViewProps {
 }
@@ -20,7 +20,7 @@ export const FretBoardView = (props: FretBoardViewProps) => {
   const fretLabels = fretBoardLabels.labels
 
   const [guitarPositions] = useAtom(guitarPositionsAtom)
-  const fretActions = guitarPositions.positions;
+  const fretActions: GuitarPositionModel[] = guitarPositions.positions;
 
   const fretLabel = fretLabelBuilder(fretLabels)
 
