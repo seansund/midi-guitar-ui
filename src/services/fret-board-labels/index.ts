@@ -1,7 +1,7 @@
 import {FretBoardLabelsApi} from './fret-board-labels.api';
-import {FretBoardLabelsMock} from './fret-board-labels.mock';
+import {FretBoardLabelsGraphql} from "./fret-board-labels.graphql";
 
 export * from './fret-board-labels.api'
 
 let _instance: FretBoardLabelsApi;
-export const getFretLabelsApi = () => _instance ? _instance : _instance = new FretBoardLabelsMock();
+export const getFretLabelsApi = () => _instance ? _instance : _instance = new FretBoardLabelsGraphql();
