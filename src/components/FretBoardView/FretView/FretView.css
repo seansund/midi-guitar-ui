@@ -1,0 +1,13 @@
+
+.fret-vertical, .fret-vertical-open {
+    border-bottom-color: black;
+    border-bottom-width: 1px;
+    border-bottom-style: solid;
+}
+
+.fret-vertical-open {
+    border-top-color: black;
+    border-top-width: 1px;
+    border-top-style: solid;
+    border-bottom-width: 5px;
+}
