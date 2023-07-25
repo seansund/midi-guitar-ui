@@ -2,11 +2,14 @@ import React from "react";
 import {useAtom} from "jotai";
 import {Grid} from "@mui/material";
 
-import {FretBoardDirectionToggle} from "../../components/FretBoardDirectionToggle";
-import {FretBoardView} from "../../components/FretBoardView";
-import {ChordView} from "../../components/ChordView/ChordView";
-import {ModeControl} from "../../components/ModeControl/ModeControl";
-import {GuitarKeyControl} from "../../components/GuitarKeyControl/GuitarKeyControl";
+import {
+    ChordView,
+    FretBoardDirectionToggle,
+    FretBoardView,
+    GuitarKeyControl,
+    ModeControl,
+    TextEditor
+} from "../../components";
 
 import {fretBoardModeAtom, fretBoardModesAtom, guitarKeyAtom, guitarKeysAtom} from "../../atoms";
 
@@ -34,6 +37,7 @@ export const FretBoardPage = (props: FretBoardPageProps) => {
             </Grid>
             <FretBoardView></FretBoardView>
             <ChordView></ChordView>
+            <TextEditor></TextEditor>
         </div>
     )
 }
