@@ -1,5 +1,6 @@
 import {atomWithObservable} from "jotai/utils";
-import {getKeyPressedApi, KeyPressedApi} from "../services/key-pressed";
+
+import {getKeyPressedApi, KeyPressedApi} from "@/services";
 
 export const keyPressedAtom = atomWithObservable<string>(
     () => {

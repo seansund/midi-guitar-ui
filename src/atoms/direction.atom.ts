@@ -1,3 +1,8 @@
 import {atom} from 'jotai';
 
-export const directionAtom = atom<'horizontal' | 'vertical'>('horizontal')
+export enum Direction {
+    horizontal = 'horizontal',
+    vertical = 'vertical'
+}
+
+export const directionAtom = atom<Direction>(Direction.horizontal)

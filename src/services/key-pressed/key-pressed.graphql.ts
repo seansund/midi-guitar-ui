@@ -2,12 +2,13 @@ import {BehaviorSubject, Observable} from "rxjs";
 import {ApolloClient, FetchResult, gql} from "@apollo/client";
 
 import {KeyPressedApi} from "./key-pressed.api";
-import {getApolloClient} from "../../backends/apollo-client";
+import {getApolloClient} from "@/backends/apollo-client";
 
 const KEYS_PRESSED_SUBSCRIPTION = gql`subscription { keyPressed }`
 
 export class KeyPressedGraphql implements KeyPressedApi {
 
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     client: ApolloClient<any>
     subject: BehaviorSubject<string>
 

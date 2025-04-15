@@ -1,6 +1,6 @@
 import {Observable} from "rxjs";
 
-import {FretBoardConfigModel, FretBoardModeModel, KeyModel} from "../../models";
+import {FretBoardConfigModel, FretBoardModeModel, KeyModel} from "@/models";
 
 export const defaultFretBoardMode: FretBoardModeModel = {mode: 'notes', label: 'Notes'};
 export const defaultKey: KeyModel = {key: 'G', label: 'G / e'}

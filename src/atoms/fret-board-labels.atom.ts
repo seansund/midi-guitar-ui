@@ -1,7 +1,7 @@
 import {atomWithObservable} from "jotai/utils";
 
-import {FretBoardLabelsModel} from '../models';
-import {FretBoardLabelsApi, getFretLabelsApi} from "../services";
+import {FretBoardLabelsModel} from '@/models';
+import {FretBoardLabelsApi, getFretLabelsApi} from "@/services";
 
 export const fretBoardLabelsAtom = atomWithObservable<FretBoardLabelsModel>(
     () => {

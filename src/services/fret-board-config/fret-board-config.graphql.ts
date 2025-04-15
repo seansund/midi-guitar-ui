@@ -2,8 +2,8 @@ import {BehaviorSubject, defer, from, Observable} from "rxjs";
 import {ApolloClient, FetchResult, gql} from '@apollo/client';
 
 import {defaultFretBoardMode, defaultKey, FretBoardConfigApi} from "./fret-board-config.api";
-import {getApolloClient} from "../../backends/apollo-client";
-import {FretBoardConfigModel, FretBoardModeModel, KeyModel} from "../../models";
+import {getApolloClient} from "@/backends/apollo-client";
+import {FretBoardConfigModel, FretBoardModeModel, KeyModel} from "@/models";
 
 const GET_GUITAR_KEYS = gql`query { getAvailableKeys { key label } }`;
 
@@ -31,6 +31,7 @@ const FRET_BOARD_CONFIG_SUBSCRIPTION = gql`subscription { fretBoardConfig { key 
 
 export class FretBoardConfigGraphql implements FretBoardConfigApi {
 
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     client: ApolloClient<any>
 
     configSubject: BehaviorSubject<FretBoardConfigModel>

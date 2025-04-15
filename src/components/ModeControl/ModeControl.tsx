@@ -1,7 +1,7 @@
 import {FormControl, InputLabel, MenuItem, Select} from "@mui/material";
 
-import {FretBoardModeModel} from "../../models";
-import {FretBoardConfigApi, getFretBoardConfigApi} from "../../services";
+import {FretBoardModeModel} from "@/models";
+import {FretBoardConfigApi, getFretBoardConfigApi} from "@/services";
 
 export interface ModeControlProps {
     mode: string
@@ -13,6 +13,7 @@ export const ModeControl = (props: ModeControlProps) => {
 
     const modes = props.modes || [];
 
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     const setModeFromValue = (e: any) => {
         const value = e.target.value
 
@@ -36,14 +37,4 @@ export const ModeControl = (props: ModeControlProps) => {
             </Select>
         </FormControl>
     )
-}
-
-const getMode = (modes: FretBoardModeModel[], mode: string): FretBoardModeModel => {
-    const result: FretBoardModeModel[] = modes.filter(m => m.mode === mode)
-
-    if (result.length === 0) {
-        throw new Error('Mode not found: ' + mode)
-    }
-
-    return result[0]
 }
