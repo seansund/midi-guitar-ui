@@ -1,7 +1,7 @@
 import {FormControl, InputLabel, MenuItem, Select} from "@mui/material";
 
-import {KeyModel} from "../../models";
-import {FretBoardConfigApi, getFretBoardConfigApi} from "../../services";
+import {KeyModel} from "@/models";
+import {FretBoardConfigApi, getFretBoardConfigApi} from "@/services";
 
 export interface GuitarKeyControlProps {
     guitarKey: string
@@ -14,6 +14,7 @@ export const GuitarKeyControl = (props: GuitarKeyControlProps) => {
 
     const keys = props.guitarKeys || []
 
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     const setKeyFromValue = (e: any) => {
         const value: string = e.target.value
 
@@ -40,14 +41,4 @@ export const GuitarKeyControl = (props: GuitarKeyControlProps) => {
             </Select>
         </FormControl>
     )
-}
-
-const getKey = (keys: KeyModel[], key: string): KeyModel => {
-    const result: KeyModel[] = keys.filter(k => k.key === key)
-
-    if (result.length === 0) {
-        throw new Error('Key not found: ' + key)
-    }
-
-    return result[0]
 }

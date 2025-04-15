@@ -1,5 +1,6 @@
 import {BehaviorSubject, interval, map, Observable} from 'rxjs';
-import {ChordsModel, GuitarPositionsModel} from '../../models';
+
+import {ChordsModel, GuitarPositionModel, GuitarPositionsModel} from '@/models';
 import {GuitarEventsApi} from "./guitar-events.api";
 
 export class GuitarEventsMock implements GuitarEventsApi {
@@ -82,6 +83,7 @@ export class GuitarEventsMock implements GuitarEventsApi {
                     this.guitarPositionsSubject.next(next)
                     this.chordSubject.next(next)
                 },
+                // eslint-disable-next-line @typescript-eslint/no-explicit-any
                 error: (err: any) => {
                     this.guitarPositionsSubject.error(err)
                     this.chordSubject.error(err)
@@ -101,4 +103,7 @@ export class GuitarEventsMock implements GuitarEventsApi {
         return this.guitarPositionsSubject;
     }
 
+    async pressNote(): Promise<GuitarPositionModel[]> {
+        return Promise.resolve([])
+    }
 }

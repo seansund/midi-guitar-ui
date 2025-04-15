@@ -1,46 +1,58 @@
 import Grid from '@mui/material/Grid';
 
-import {GuitarPositionModel} from '../../../models';
+import {GuitarPositionModel} from '@/models';
+
+import styles from '../page.module.css';
 
 export interface FretViewProps {
   number: number;
   key: string;
-  fretLabels: (fretIndex: number, stringIndex: number) => any
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  fretLabels: (props: {fretIndex: number, stringIndex: number}) => any
   fretActions: GuitarPositionModel[];
 }
 
 export const FretView = (props: FretViewProps) => {
   const fretIndex = props.number
 
-  const fretLabel = props.fretLabels
+  const fretLabel = (stringIndex: number) => {
+    return props.fretLabels({fretIndex, stringIndex})
+  }
   const fretClassNames = fretClassNamesBuilder(props.fretActions, fretIndex)
+
+  const FretMarker = () => {
+    return <Grid size={{ xs: 1 }}>{ fretMarker(fretIndex) }</Grid>
+  }
+  const Fret = ({stringIndex}: {stringIndex: number}) => {
+    return <Grid size={{ xs: 2 }} className={fretClassNames(stringIndex)}>{fretLabel(stringIndex)}</Grid>
+  }
 
   return (
     <>
-      <Grid item xs={1}>{ fretMarker(fretIndex) }</Grid>
-      <Grid className={fretClassNames(5)} item xs={2}>{fretLabel(fretIndex, 5)}</Grid>
-      <Grid className={fretClassNames(4)} item xs={2}>{fretLabel(fretIndex, 4)}</Grid>
-      <Grid className={fretClassNames(3)} item xs={2}>{fretLabel(fretIndex, 3)}</Grid>
-      <Grid className={fretClassNames(2)} item xs={2}>{fretLabel(fretIndex, 2)}</Grid>
-      <Grid className={fretClassNames(1)} item xs={2}>{fretLabel(fretIndex, 1)}</Grid>
-      <Grid className={fretClassNames(0)} item xs={2}>{fretLabel(fretIndex, 0)}</Grid>
+      <FretMarker />
+      <Fret stringIndex={5} />
+      <Fret stringIndex={4} />
+      <Fret stringIndex={3} />
+      <Fret stringIndex={2} />
+      <Fret stringIndex={1} />
+      <Fret stringIndex={0} />
     </>
   )
 }
 
 const fretClassNamesBuilder = (actions: GuitarPositionModel[], fretIndex: number) => {
   return (stringIndex: number): string => {
-    const classNames: string[] = ['fret-vertical']
+    const classNames: string[] = [styles.fretVertical]
 
     if (fretIndex === 0) {
-      classNames.push('fret-vertical-open')
+      classNames.push(styles.fretVerticalOpen)
     }
 
     const match = actions
         .filter(action => !!action)
         .filter(action => action.fretIndex === fretIndex && action.stringIndex === stringIndex)
     if (match.length > 0) {
-      classNames.push('fret-active')
+      classNames.push(styles.fretActive)
     }
 
     return classNames.join(' ')

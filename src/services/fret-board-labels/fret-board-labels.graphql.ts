@@ -2,12 +2,13 @@ import {ApolloClient, FetchResult, gql} from "@apollo/client";
 import {BehaviorSubject, Observable} from "rxjs";
 
 import {FretBoardLabelsApi} from "./fret-board-labels.api";
-import {getApolloClient} from "../../backends/apollo-client";
-import {FretBoardLabelModel, FretBoardLabelsModel} from "../../models";
+import {getApolloClient} from "@/backends/apollo-client";
+import {FretBoardLabelModel, FretBoardLabelsModel} from "@/models";
 
 const FRET_BOARD_LABELS_SUBSCRIPTION = gql`subscription { fretBoardLabels { stringIndex fretIndex label } }`
 
 export class FretBoardLabelsGraphql implements FretBoardLabelsApi {
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     client: ApolloClient<any>
     labelSubject: BehaviorSubject<FretBoardLabelsModel>
 

@@ -1,23 +1,21 @@
 import Grid from '@mui/material/Grid'
 import {useAtom} from 'jotai';
 
-import './FretBoardView.css';
+import './page.module.css';
 import {FretView} from './FretView';
 import {StringView} from './StringView';
-import {directionAtom, fretBoardLabelsAtom, guitarPositionsAtom} from '../../atoms';
-import {FretBoardLabelModel, GuitarPositionModel} from "../../models";
+import {directionAtom, fretBoardLabelsAtom, guitarPositionsAtom} from '@/atoms';
+import {FretBoardLabelModel, GuitarPositionModel} from "@/models";
+import {getGuitarEventsApi} from "@/services";
 
-export interface FretBoardViewProps {
-}
-
-export const FretBoardView = (props: FretBoardViewProps) => {
+export const FretBoardView = () => {
   const [direction] = useAtom(directionAtom)
 
   const columns = direction === 'vertical' ? 13 : 18
   const width = direction === 'vertical' ? '250px' : '100%'
 
   const [fretBoardLabels] = useAtom(fretBoardLabelsAtom)
-  const fretLabels = fretBoardLabels.labels
+  const fretLabels: FretBoardLabelModel[] = fretBoardLabels.labels
 
   const [guitarPositions] = useAtom(guitarPositionsAtom)
   const fretActions: GuitarPositionModel[] = guitarPositions.positions;
@@ -26,14 +24,14 @@ export const FretBoardView = (props: FretBoardViewProps) => {
 
   const frets = () => {
     if (direction === 'vertical') {
-      return Array.from(Array(18).keys()).map((fret: number) => <FretView key={'' + fret} number={fret} fretLabels={fretLabel} fretActions={fretActions}></FretView>)
+      return Array.from(Array(18).keys()).map((fret: number) => <FretView key={'' + fret} number={fret} fretLabels={fretLabel} fretActions={fretActions} />)
     } else {
-      return Array.from(Array(7).keys()).map((index: number) => <StringView key={'' + index} index={index} fretLabels={fretLabel} fretActions={fretActions}></StringView>)
+      return Array.from(Array(7).keys()).map((index: number) => <StringView key={'' + index} index={index} fretLabels={fretLabel} fretActions={fretActions} />)
     }
   }
 
   return (
-    <div style={{width}}>
+    <div style={{width, margin: 'auto'}}>
       <Grid container columns={{ xs: columns }} alignItems="center">
         {frets()}
       </Grid>
@@ -42,11 +40,18 @@ export const FretBoardView = (props: FretBoardViewProps) => {
 }
 
 export const fretLabelBuilder = (fretLabels: FretBoardLabelModel[] = []) => {
-  return (fretIndex: number, stringIndex: number) => {
+  const service = getGuitarEventsApi();
+
+  const fretLabel = ({fretIndex, stringIndex}: {fretIndex: number, stringIndex: number}) => {
     const matches = fretLabels.filter(label => label.fretIndex === fretIndex && label.stringIndex === stringIndex)
 
-    return matches.length > 0 ? matches[0].label || NBSP : NBSP;
+    if (matches.length === 0) {
+      return NBSP;
+    }
+
+    return matches[0].label ? <div onClick={() => service.pressNote({fretIndex, stringIndex})}>{matches[0].label}</div> : NBSP;
   }
+  return fretLabel;
 }
 
 const NBSP = (<>&nbsp;</>)

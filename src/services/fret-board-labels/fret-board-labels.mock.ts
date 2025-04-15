@@ -1,8 +1,8 @@
 import {BehaviorSubject, Observable} from 'rxjs';
 
 import {FretBoardLabelsApi} from './fret-board-labels.api';
-import {defaultFretBoardMode, defaultKey, FretBoardConfigApi, getFretBoardConfigApi} from "../fret-board-config";
-import {FretBoardConfigModel, FretBoardLabelModel, FretBoardLabelsModel} from '../../models';
+import {FretBoardConfigModel, FretBoardLabelModel, FretBoardLabelsModel} from '@/models';
+import {defaultFretBoardMode, defaultKey, FretBoardConfigApi, getFretBoardConfigApi} from "@/services";
 
 export class FretBoardLabelsMock implements FretBoardLabelsApi {
 
@@ -100,7 +100,6 @@ const notes = [
     shiftNotesUp(baseNotes, 9),
 ]
 
-const scaleKey = 'G'
 const penatonicMajorScale = [
     ['x', '',  '', 'x',  '', 'x', '', 'x', '',  '', 'x', ''],
     ['x', '',  '', 'x',  '', 'x', '', '', 'x',  '', 'x', ''],

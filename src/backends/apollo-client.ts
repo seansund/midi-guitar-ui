@@ -28,6 +28,7 @@ const splitLink = split(
   httpLink,
 );
 
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 let _client: ApolloClient<any>
 export const getApolloClient = () => _client
     ? _client

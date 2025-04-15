@@ -1,11 +1,8 @@
-import {keyPressedAtom} from "../../atoms";
 import {useAtom} from "jotai";
 import {TextareaAutosize} from "@mui/material";
+import {keyPressedAtom} from "@/atoms";
 
-export interface TextEditorProps {
-}
-
-export const TextEditor = (props: TextEditorProps) => {
+export const TextEditor = () => {
     const [text] = useAtom(keyPressedAtom)
 
     return (

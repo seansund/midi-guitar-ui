@@ -1,14 +1,11 @@
 import {ToggleButton, ToggleButtonGroup} from '@mui/material';
 import {useAtom} from 'jotai';
-import {directionAtom} from '../../atoms/direction.atom';
+import {directionAtom} from '@/atoms';
 
-export interface FretBoardDirectionToggleProps {
-
-}
-
-export const FretBoardDirectionToggle = (props: FretBoardDirectionToggleProps) => {
+export const FretBoardDirectionToggle = () => {
   const [direction, setDirection] = useAtom(directionAtom)
 
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const handleChange = (e: any) => {
     setDirection(e.target.value)
   }
